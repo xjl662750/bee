@@ -451,6 +451,17 @@ func analyseControllerPkg(vendorPath, localName, pkgpath string) {
 			}
 		}
 	}
+	//add
+	if pkgRealpath == "" {
+		for _, wg := range gopaths {
+			wg, _ = filepath.EvalSymlinks(filepath.Join(wg, pkgpath))
+			if utils.FileExists(wg) {
+				pkgRealpath = wg
+				break
+			}
+		}
+	}
+	
 	if pkgRealpath != "" {
 		if _, ok := pkgCache[pkgpath]; ok {
 			return
